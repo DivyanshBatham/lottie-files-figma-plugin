@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery, gql, TypedDocumentNode } from "@apollo/client";
 import type {
   AnimationItem,
@@ -182,7 +182,8 @@ export default function PublicAnimation() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center py-3 gap-3 px-4">
-        <button
+        <Link
+          to="/discover"
           className={classNames(
             "relative inline-flex items-center rounded-md bg-white p-1 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
           )}
@@ -202,7 +203,7 @@ export default function PublicAnimation() {
               d="M15.75 19.5 8.25 12l7.5-7.5"
             />
           </svg>
-        </button>
+        </Link>
         <p className="pointer-events-none block truncate text-sm font-medium text-gray-900 text-ellipsis overflow-hidden">
           {data?.publicAnimation.name}
         </p>
