@@ -6,7 +6,7 @@ import { useQuery, gql, TypedDocumentNode } from "@apollo/client";
 // import { DotLottiePlayer, Controls } from "@dotlottie/react-player";
 // import "@dotlottie/react-player/dist/index.css";
 import { useMemo, useState } from "react";
-import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import useLottieAnimations from "../../hooks/useLottieAnimations";
 import useDebouncedValue from "../../hooks/useDebouncedValue";
 import { Loader } from "@ui/components/Loader";
@@ -342,7 +342,7 @@ export default function Animations() {
           </label>
           <div className="relative text-gray-500 focus-within:text-gray-600">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <ChevronLeftIcon height={20} width={20} />
+              <MagnifyingGlassIcon height={20} width={20} />
             </div>
             <input
               id="mobile-search"
