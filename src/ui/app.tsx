@@ -1,66 +1,67 @@
-import { useState } from "react";
-import * as Networker from "monorepo-networker";
-import { NetworkMessages } from "@common/network/messages";
+import { NavLink, Route, Routes, Navigate } from "react-router-dom";
+import classNames from "classnames";
 
-import ReactLogo from "@ui/assets/react.svg?component";
-import viteLogo from "@ui/assets/vite.svg?url";
-import figmaLogo from "@ui/assets/figma.png";
+import "@ui/styles/main.css";
+import Discover from "./pages/animations";
+import Compositions from "./pages/compositions";
+import PublicAnimation from "./pages/animations/[animationId]";
+import {
+  FolderArrowDownIcon,
+  FolderOpenIcon,
+  UserCircleIcon,
+} from "@heroicons/react/20/solid";
 
-import { Button } from "@ui/components/Button";
-import "@ui/styles/main.scss";
+const Tabs = [
+  {
+    to: "/discover",
+    text: "Discover",
+    logo: <FolderArrowDownIcon height={20} width={20} />,
+  },
+  {
+    to: "/compositions",
+    text: "Compositions",
+    logo: <FolderOpenIcon height={20} width={20} />,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="homepage">
-      <div>
-        <a href="https://www.figma.com" target="_blank">
-          <img src={figmaLogo} className="logo figma" alt="Figma logo" />
-        </a>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <ReactLogo className="logo react" title="React logo" />
-        </a>
+    <div className="flex flex-col h-full">
+      <div className="sticky top-0 border-b border-gray-200 bg-white z-10 flex items-center justify-between px-4">
+        <nav className="-mb-px flex space-x-8 " aria-label="Tabs">
+          {Tabs.map((tab) => (
+            <NavLink
+              to={tab.to}
+              className={({ isActive }) =>
+                classNames(
+                  "group inline-flex gap-1 items-center border-b-2 py-4 px-1 text-sm font-medium ",
+                  {
+                    "border-teal-500 text-teal-600": isActive,
+                    "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700":
+                      !isActive,
+                  }
+                )
+              }
+            >
+              {tab.logo}
+              {tab.text}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div>
+          <UserCircleIcon height={24} width={24} />
+        </div>
       </div>
-
-      <h1>Figma + Vite + React</h1>
-
-      <div className="card">
-        <Button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <Button
-          onClick={async () => {
-            const response = await NetworkMessages.PING.request({});
-            console.log("Response:", response);
-          }}
-          style={{ marginInlineStart: 10 }}
-        >
-          ping the other side
-        </Button>
-        <Button
-          onClick={() =>
-            NetworkMessages.CREATE_RECT.send({
-              width: 100,
-              height: 100,
-            })
-          }
-          style={{ marginInlineStart: 10 }}
-        >
-          create square
-        </Button>
-        <p>
-          Edit <code>src/app.tsx</code> and save to test HMR
-        </p>
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Navigate to="/discover" />} />
+          <Route path="/discover" element={<Discover />} />
+          <Route path="/discover/:id" element={<PublicAnimation />} />
+          <Route path="/compositions" element={<Compositions />} />
+          <Route path="*" element={<h1>404</h1>} />
+        </Routes>
       </div>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more <br />
-        <span>(Current logical side = {Networker.Side.current.getName()})</span>
-      </p>
     </div>
   );
 }

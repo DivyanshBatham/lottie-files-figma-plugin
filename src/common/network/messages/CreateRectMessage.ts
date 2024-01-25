@@ -30,7 +30,7 @@ export class CreateRectMessage extends Networker.MessageType<Payload> {
       rect.resize(payload.width, payload.height);
       figma.currentPage.appendChild(rect);
       figma.viewport.scrollAndZoomIntoView([rect]);
-      figma.closePlugin();
+      // figma.closePlugin();
     }
   }
 }
